@@ -615,6 +615,9 @@ namespace CmisSync.Lib
                 /// </summary>
                 public RepoInfo GetRepoInfo()
                 {
+                    // TODO: workaround
+                    var localPath = LocalPath.TrimEnd(Path.DirectorySeparatorChar);
+
                     RepoInfo repoInfo = new RepoInfo(DisplayName, ConfigManager.CurrentConfig.ConfigPath);
                     repoInfo.User = UserName;
                     repoInfo.Password = new Password();
@@ -622,7 +625,7 @@ namespace CmisSync.Lib
                     repoInfo.Address = RemoteUrl;
                     repoInfo.RepoID = RepositoryId;
                     repoInfo.RemotePath = RemotePath;
-                    repoInfo.TargetDirectory = LocalPath;
+                    repoInfo.TargetDirectory = localPath;
                     repoInfo.MaxUploadRetries = uploadRetries;
                     repoInfo.MaxDownloadRetries = downloadRetries;
                     repoInfo.MaxDeletionRetries = deletionRetries;
@@ -668,6 +671,7 @@ namespace CmisSync.Lib
 
         /// <summary>
         /// User details.
+        /// TODO Not used anymore. Remove.
         /// </summary>
         public class User
         {
@@ -683,7 +687,9 @@ namespace CmisSync.Lib
             public string EMail { get; set; }
         }
 
-        /// <summary></summary>
+        /// <summary>
+        /// TODO Merge with CmisProfile?
+        /// </summary>
         public class Feature {
             /// <summary></summary>
             [XmlElement("getFolderTree", IsNullable=true)]

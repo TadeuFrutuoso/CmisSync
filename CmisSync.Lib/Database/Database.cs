@@ -1033,6 +1033,10 @@ namespace CmisSync.Lib.Database
             Dictionary<string, object> parameters = new Dictionary<string, object>();
 			parameters.Add("localPath", localRelativePath);
             string res = (string)ExecuteSQLFunction(command, parameters);
+            if(string.IsNullOrEmpty(res))
+            {
+                Logger.Debug("GetCheckSum returns null for path=" + path + ", localRelativePath=" + localRelativePath);
+            }
             return res;
         }
 

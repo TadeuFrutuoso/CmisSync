@@ -653,6 +653,9 @@ namespace CmisSync.Lib.Sync
             /// <summary>
             /// Download all content from a CMIS folder.
             /// </summary>
+            /// <param name="remoteFolder">The new folder to download. Example: /sites/project/newfolder</param>
+            /// <param name="remotePath">The new folder to download. Example: /sites/project/newfolder</param>
+            /// <param name="localFolder">The new folder that will be filled by this operation. Warning: It must exist already! Example: C:\CmisSync\project\newfolder</param> TODO: Create the local folder in this method.
             private void RecursiveFolderCopy(IFolder remoteFolder, string remotePath, string localFolder)
             {
                 SleepWhileSuspended();
@@ -1069,7 +1072,6 @@ namespace CmisSync.Lib.Sync
                 {
                     syncItem = SyncItemFactory.CreateFromLocalPath(filePath, false, repoInfo, database);
                 }
-                Logger.Info("Uploading: " + syncItem.LocalPath);
 
                 try
                 {
@@ -1095,10 +1097,9 @@ namespace CmisSync.Lib.Sync
                         contentStream.Length = file.Length;
                         contentStream.Stream = hashstream;
 
-                        Logger.Debug("Uploading: " + syncItem.LocalPath + " as "
-                            + remoteFolder.Path + "/" + remoteFileName);
+                        Logger.InfoFormat("Uploading: {0} as {1}/{2}",syncItem.LocalPath, remoteFolder.Path, remoteFileName);
                         remoteDocument = remoteFolder.CreateDocument(properties, contentStream, null);
-                        Logger.Debug("Uploaded: " + syncItem.LocalPath);
+                        Logger.InfoFormat("Uploaded: {0}", syncItem.LocalPath);
                         filehash = hashAlg.Hash;
                     }
 
