@@ -477,6 +477,10 @@ namespace CmisSync.Lib.Cmis
             if (String.IsNullOrEmpty(cmisPath2))
                 return cmisPath1;
 
+            // If the first path ends with a separator, just concatenate.
+            if (cmisPath1.EndsWith(CMIS_FILE_SEPARATOR.ToString()))
+                return cmisPath1 + cmisPath2;
+
             return cmisPath1 + CMIS_FILE_SEPARATOR + cmisPath2;
         }
 
